@@ -4,16 +4,50 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 
 // Practice problems on binary trees
 
+
 function findMinBST (rootNode) {
-  // Your code here 
+// Wht do we do about unbalanced trees?
+  // let currentNode = new TreeNode(rootNode)
+  // We need to find the left-most value to find min integer
+while (rootNode.left !== null) {
+  rootNode = rootNode.left
+}
+return rootNode.val
 }
 
 function findMaxBST (rootNode) {
-  // Your code here 
+// We need to find the right-m ost value to find max
+while (rootNode.right !== null) {
+  rootNode = rootNode.right
+}
+return rootNode.val
 }
 
 function findMinBT (rootNode) {
-  // Your code here 
+// should return the minimum value in a Binary Tree'
+// traverse thorugh entire tree -> recursion
+// Based on results, find miv val
+// Need to traverse both right and left through entire tree
+
+let min = rootNode.val
+if (rootNode.left) {
+  rootNode = rootNode.left
+  if (min > rootNode.left) {
+    Math.min(findMinBT(rootNode.left))
+  }
+  else return min
+}
+if (rootNode.right) {
+  rootNode = rootNode.right
+  if (min > rootNode.right) {
+    Math.min(findMinBT(rootNode.right))
+  }
+  else return min
+}
+
+
+
+Math.min(findMintBt(rootNode.left))
 }
 
 function findMaxBT (rootNode) {
