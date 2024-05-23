@@ -58,15 +58,17 @@ function getHeight (rootNode) {
   // Do we have to balance the tree?
   if (!rootNode) return -1
   if (rootNode.left === null && rootNode.right === null) return 0
-  let count = 1
+  let countLeft = 1
+  let countRight = 1
 
-  if (rootNode.left) {
-      count += getHeight(rootNode.left)
-  }
-  if (rootNode.right){
-    count += getHeight(rootNode.right)
-  }
-return count
+countLeft += getHeight(rootNode.left)
+countRight += getHeight(rootNode.right)
+
+if (countLeft < countRight) {
+  return countRight
+} else {
+  return countLeft
+}
   }
 
 function balancedTree (rootNode) {
@@ -91,12 +93,35 @@ while (stack.length > 0) {
   }
 }
 return count
-
-
 }
 
+    //      4
+    //    /   \
+    //   2     6
+    //  / \   / \
+    // 1   3 5   7
 function getParentNode (rootNode, target) {
-  // Your code here 
+  if (!target) return undefined
+  if (target === rootNode.val) return null
+
+  // if (rootNode.left === target || rootNode.right === target) return rootNode
+// If target node, then we need to return that parent
+// Traverse until we reach the parent node of target
+
+if (rootNode.left !== target) {
+  getParentNode(rootNode.left, target)
+}
+else {
+  return rootNode.val
+}
+if (rootNode.right !== target) {
+  getParentNode(rootNode.right, target)
+}
+else {
+return rootNode.val
+}
+
+
 }
 
 function inOrderPredecessor (rootNode, target) {
