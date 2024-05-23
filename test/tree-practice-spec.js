@@ -258,6 +258,11 @@ describe('Binary Tree Practice', () => {
   describe('countNodes', () => {
 
     it('should return the number of nodes in a Binary Tree', function() {
+    //      4
+    //    /   \
+    //   2     6
+    //  / \   / \
+    // 1   3 5   7
       expect(countNodes(bstRoot)).to.equal(7);
       expect(countNodes(bstRootUnbalanced)).to.equal(7);
       expect(countNodes(bstRootBig)).to.equal(13);

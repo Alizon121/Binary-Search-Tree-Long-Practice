@@ -28,42 +28,71 @@ function findMinBT (rootNode) {
 // traverse thorugh entire tree -> recursion
 // Based on results, find miv val
 // Need to traverse both right and left through entire tree
-
+if (rootNode === undefined) return
 let min = rootNode.val
+
 if (rootNode.left) {
-  rootNode = rootNode.left
-  if (min > rootNode.left) {
-    Math.min(findMinBT(rootNode.left))
+    min = Math.min(findMinBT(rootNode.left), min)
   }
-  else return min
-}
 if (rootNode.right) {
-  rootNode = rootNode.right
-  if (min > rootNode.right) {
-    Math.min(findMinBT(rootNode.right))
-  }
-  else return min
+   min = Math.min(findMinBT(rootNode.right), min)
 }
-
-
-
-Math.min(findMintBt(rootNode.left))
+return min
 }
 
 function findMaxBT (rootNode) {
-  // Your code here 
+  if (rootNode === undefined) return
+  let max = rootNode.val
+  
+  if (rootNode.left) {
+      max = Math.max(findMaxBT(rootNode.left), max)
+    }
+  if (rootNode.right) {
+     max = Math.max(findMaxBT(rootNode.right), max)
+  }
+  return max
+  
 }
 
 function getHeight (rootNode) {
-  // Your code here 
-}
+  // Do we have to balance the tree?
+  if (!rootNode) return -1
+  if (rootNode.left === null && rootNode.right === null) return 0
+  let count = 1
+
+  if (rootNode.left) {
+      count += getHeight(rootNode.left)
+  }
+  if (rootNode.right){
+    count += getHeight(rootNode.right)
+  }
+return count
+  }
 
 function balancedTree (rootNode) {
   // Your code here 
 }
 
 function countNodes (rootNode) {
-  // Your code here 
+// We need to traverse through the entire tree, and count nodes
+// we can add nodes to an array and count every time we pop() a node
+
+const stack = [rootNode];
+let count = 1
+while (stack.length > 0) {
+  let node = stack.pop()
+  if (node.left) {
+    stack.push(node.left)
+    count++;
+  }
+  if (node.right) {
+    stack.push(node.right)
+    count++;
+  }
+}
+return count
+
+
 }
 
 function getParentNode (rootNode, target) {
