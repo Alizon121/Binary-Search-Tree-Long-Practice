@@ -55,7 +55,6 @@ function findMaxBT (rootNode) {
 }
 
 function getHeight (rootNode) {
-  // Do we have to balance the tree?
   if (!rootNode) return -1
   if (rootNode.left === null && rootNode.right === null) return 0
   let countLeft = 1
@@ -72,8 +71,33 @@ if (countLeft < countRight) {
   }
 
 function balancedTree (rootNode) {
-  // Your code here 
+// if tree is balanced, then height is equal to log n -> checks tree
+// left and right subtrees differ in height by no more than 1,
+// traverse the tree from a node all the way down and compare heights
+// Need to compare the hieght of each node in tree
+// If any child nodes are unbalanced, then the entire BT is unbalanced
+
+// Usable code?
+  // Helper function to get the height of a tree
+  function getHeight(node) {
+      if (!node) return 0;
+      return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+  }
+  // Helper function to check if the tree is balanced
+  function isBalanced(node) {
+      if (!node) return true; // An empty tree is balanced
+
+      const leftHeight = getHeight(node.left);
+      const rightHeight = getHeight(node.right);
+
+      if (Math.abs(leftHeight - rightHeight) > 1) return false;
+
+      return isBalanced(node.left) && isBalanced(node.right);
+  }
+
+  return isBalanced(rootNode);
 }
+
 
 function countNodes (rootNode) {
 // We need to traverse through the entire tree, and count nodes
@@ -95,37 +119,91 @@ while (stack.length > 0) {
 return count
 }
 
+
+
+
+function getParentNode (rootNode, target) {
+// If target node, then we need to return that parent
+// Traverse until we reach the parent node of target
+// console.log(rootNode.val)
+
+if (rootNode.val === target) return null;
+
+    const queue = [rootNode];
+
+    while (queue.length) {
+        let currNode = queue.shift();
+
+        if (currNode.left && currNode.left.val === target) {
+            return currNode;
+        }
+        if (currNode.right && currNode.right.val === target) {
+            return currNode;
+        }
+
+        if (currNode.left) {
+            queue.push(currNode.left);
+        }
+        if (currNode.right) {
+            queue.push(currNode.right);
+        }
+    }
+
+    return undefined;
+
+}
+  
+
+
+
     //      4
     //    /   \
     //   2     6
     //  / \   / \
     // 1   3 5   7
-function getParentNode (rootNode, target) {
-  if (!target) return undefined
-  if (target === rootNode.val) return null
 
-  // if (rootNode.left === target || rootNode.right === target) return rootNode
-// If target node, then we need to return that parent
-// Traverse until we reach the parent node of target
+    //         8
+    //       /   \
+    //      3     10
+    //    /   \     \
+    //   2     5     11
+    //  /    /  \     \
+    // 1    4    7    12
+    //          /      \
+    //         6       15
+    //                /
+    //              14
 
-if (rootNode.left !== target) {
-  getParentNode(rootNode.left, target)
-}
-else {
-  return rootNode.val
-}
-if (rootNode.right !== target) {
-  getParentNode(rootNode.right, target)
-}
-else {
-return rootNode.val
-}
-
-
-}
-
+      // 1
+    //  \
+    //   2
+    //    \
+    //     3
+    //      \
+    //       4
+    //        \
+    //         5
+    //          \
+    //           6
+    //            \
+    //             7
 function inOrderPredecessor (rootNode, target) {
-  // Your code here 
+  // returns the number that precedes the target (e.g. 3 precedes 4)
+  // We need to search the tree for an in-order value that preceded a target
+      // If there is a node with value that is target -1, then return
+  // if the starting node is the smallest value in the tree (e.g. 1), then return null
+
+  if (target <= 1) return null
+  let predecessor = target - 1
+
+  // Search the tree to find a match with predecessor
+
+if (rootNode === null) return
+if (rootNode === predecessor) return predecessor
+
+if (target < rootNode.val)  return inOrderPredecessor(rootNode.left, target)
+if (target > rootNode.val) return inOrderPredecessor(rootNode.right, target)
+
 }
 
 function deleteNodeBST(rootNode, target) {
