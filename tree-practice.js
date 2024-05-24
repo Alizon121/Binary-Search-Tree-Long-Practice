@@ -77,12 +77,6 @@ function balancedTree (rootNode) {
 // Need to compare the hieght of each node in tree
 // If any child nodes are unbalanced, then the entire BT is unbalanced
 
-// Usable code?
-  // Helper function to get the height of a tree
-  function getHeight(node) {
-      if (!node) return 0;
-      return 1 + Math.max(getHeight(node.left), getHeight(node.right));
-  }
   // Helper function to check if the tree is balanced
   function isBalanced(node) {
       if (!node) return true; // An empty tree is balanced
@@ -90,11 +84,11 @@ function balancedTree (rootNode) {
       const leftHeight = getHeight(node.left);
       const rightHeight = getHeight(node.right);
 
-      if (Math.abs(leftHeight - rightHeight) > 1) return false;
+      if (Math.abs(leftHeight - rightHeight) > 1) return false; // accounts for left - right, vice versa
 
       return isBalanced(node.left) && isBalanced(node.right);
   }
-
+  // Check if the entire tree is balanced
   return isBalanced(rootNode);
 }
 
