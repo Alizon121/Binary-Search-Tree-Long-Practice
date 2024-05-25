@@ -184,20 +184,29 @@ if (rootNode.val === target) return null;
 function inOrderPredecessor (rootNode, target) {
   // returns the number that precedes the target (e.g. 3 precedes 4)
   // We need to search the tree for an in-order value that preceded a target
-      // If there is a node with value that is target -1, then return
+      // If there is a node with value that is <target, then return
   // if the starting node is the smallest value in the tree (e.g. 1), then return null
 
+  let predecessor = null; //the next integer that precedes the target
   if (target <= 1) return null
-  let predecessor = target - 1
 
-  // Search the tree to find a match with predecessor
+  // If the current node's value is less than the target, update the predecessor.
+  // If the current node's value is greater than or equal to the target, we don't need to traverse further in this path.
+  // Recursively traverse the right subtree.
+  
+  function inOrderTraversal(rootNode) {
+    if (!rootNode) return 
 
-if (rootNode === null) return
-if (rootNode === predecessor) return predecessor
+      inOrderTraversal(rootNode.left)
 
-if (target < rootNode.val)  return inOrderPredecessor(rootNode.left, target)
-if (target > rootNode.val) return inOrderPredecessor(rootNode.right, target)
+      if (rootNode.val < target) predecessor = rootNode.val
 
+      inOrderTraversal(rootNode.right)
+          
+  }
+
+inOrderTraversal(rootNode)
+return predecessor
 }
 
 function deleteNodeBST(rootNode, target) {
