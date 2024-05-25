@@ -210,24 +210,40 @@ return predecessor
 }
 
 function deleteNodeBST(rootNode, target) {
-  // Do a traversal to find the node. Keep track of the parent
-
   // Undefined if the target cannot be found
-
-  // Set target based on parent
-
+  if (rootNode.val !== target) return undefined
   // Case 0: Zero children and no parent:
   //   return null
 
+  if (rootNode.left === null && rootNode.right === null && !getParentNode(rootNode)) return null
+  
+  // Set target based on parent
+  target.left = getParentNode(target)
+  target.right = getParentNode(target)
+
+  // Do a traversal to find the node. Keep track of the parent
+  function inOrderTraversal(rootNode) {
+    if (rootNode) {
+      inOrderTraversal(rootNode.left)
+      if (rootNode.val === target) return rootNode.val
+      inOrderTraversal(rootNode.right)
+          }
+  }
+
+   inOrderTraversal(rootNode)
+
+
   // Case 1: Zero children:
   //   Set the parent that points to it to null
-
+if (rootNode.left === null && rootNode.right === null) rootNode = null
   // Case 2: Two children:
   //  Set the value to its in-order predecessor, then delete the predecessor
   //  Replace target node with the left most child on its right side, 
   //  or the right most child on its left side.
   //  Then delete the child that it was replaced with.
-
+if (rootNode.left && rootNode.right) {
+  rootNode.val = inOrderPredecessor(rootNode)
+}
   // Case 3: One child:
   //   Make the parent point to the child
 
